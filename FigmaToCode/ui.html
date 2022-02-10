@@ -35,13 +35,14 @@
     createDiv(components);
   };
 
+
 </script>
 
 <script>
   function createDiv(components) {
     let htmlCode = '';
     components.forEach(element => {
-      htmlCode = htmlCode + getHtmlCodeDiv();
+      htmlCode = htmlCode + getHtmlCodeDiv(element);
     });
 
     document.getElementById('div-container').innerText = htmlCode;
@@ -49,9 +50,17 @@
 </script>
 
 <script>
-  function getHtmlCodeDiv() {
+  function getHtmlCodeDiv(element) {
     const divHtml = `
-    <div></div>
+    <div 
+        style='
+        width:${element.width}; 
+        height:${element.height};
+        position:${element.position};
+        top:${element.pos_y};
+        left:${element.pos_x}
+        '>
+    </div>
     `;
     return divHtml;
   }

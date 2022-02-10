@@ -28,9 +28,27 @@ figma.showUI(__html__);
 //   figma.closePlugin();
 // };
 figma.on("run", () => {
-    console.log("HELLo");
+    let divCssProperties = {
+        pos_x: null,
+        pos_y: null,
+        position: " absolute",
+        width: null,
+        height: null,
+    };
+    const childrenArray = figma.currentPage.children.map((childElement) => {
+        console.log(childElement.x);
+        divCssProperties = {
+            pos_x: childElement.x,
+            pos_y: childElement.y,
+            position: "absolute",
+            width: `${childElement.width}px`,
+            height: `${childElement.height}px`,
+        };
+        return divCssProperties;
+    });
+    console.log(childrenArray);
     figma.ui.postMessage({
         type: "CREATE_ELEMENTS",
-        components: figma.currentPage.children,
+        components: childrenArray,
     });
 });
