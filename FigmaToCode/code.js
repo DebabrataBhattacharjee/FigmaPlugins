@@ -30,7 +30,7 @@ figma.showUI(__html__);
 figma.on("run", () => {
     console.log("HELLo");
     figma.ui.postMessage({
-        type: "PRINT_SOMETHING",
+        type: "CREATE_ELEMENTS",
         components: figma.currentPage.children,
     });
 });
