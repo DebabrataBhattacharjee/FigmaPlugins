@@ -18,20 +18,15 @@
 
 </html>
 <script>
-
-  // document.getElementById('create').onclick = () => {
-  //   const textbox = document.getElementById('count');
-  //   const count = parseInt(textbox.value, 10);
-  //   parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-  // }
-
-  // document.getElementById('cancel').onclick = () => {
-  //   parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-  // }
+  let components = [];
   onmessage = ({ data }) => {
-    const { pluginMessage: {
-      components
-    } } = data;
+    const pluginData = {
+      height : data.pluginMessage.height,
+      width : data.pluginMessage.width,
+      x : data.pluginMessage.x,
+      y : data.pluginMessage.y,
+    }
+    components.push(pluginData)
     createDiv(components);
   };
 
@@ -41,7 +36,7 @@
   function createDiv(components) {
     let htmlCode = '';
     components.forEach(element => {
-      htmlCode = htmlCode + getHtmlCodeDiv();
+      htmlCode = htmlCode + getHtmlCodeDiv(element);
     });
 
     document.getElementById('div-container').innerText = htmlCode;
@@ -49,9 +44,14 @@
 </script>
 
 <script>
-  function getHtmlCodeDiv() {
+  function getHtmlCodeDiv(element) {
     const divHtml = `
-    <div></div>
+    <div>
+      Height: ${element.height}
+      width: ${element.width}
+      x: ${element.x}
+      y: ${element.y}
+      </div>
     `;
     return divHtml;
   }
