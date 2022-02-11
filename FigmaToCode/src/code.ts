@@ -1,22 +1,5 @@
-const getChildrenTree = (parentNode) => {
-  return (
-    parentNode.children &&
-    parentNode.children
-      .map((childElement: ComponentNode) => {
-        if (childElement.name !== parentNode.name) {
-          return {
-            pos_x: childElement.x,
-            pos_y: childElement.y,
-            position: "absolute",
-            width: `${childElement.width}px`,
-            height: `${childElement.height}px`,
-            children: getChildrenTree(childElement),
-          };
-        }
-      })
-      .filter((element: CssProperties) => element !== undefined)
-  );
-};
+import { getChildrenTree } from "./utils/createDomTree";
+import { getColorCodes } from "./utils/createColorCodes";
 
 figma.showUI(__html__);
 figma.on("run", () => {
@@ -37,22 +20,18 @@ figma.on("run", () => {
       width: `${childElement.width}px`,
       height: `${childElement.height}px`,
       children: getChildrenTree(childElement),
-      color: {
-        r: childElement.fills[0].color.r * 255,
-        g: childElement.fills[0].color.g * 255,
-        b: childElement.fills[0].color.b * 255,
-      },
+      color: getColorCodes(childElement),
     };
     return divCssProperties;
   });
-
+  console.log(figma.currentPage.children);
   figma.ui.postMessage({
     type: "CREATE_ELEMENTS",
     components: DomTree,
   });
 });
 
-interface CssProperties {
+export interface CssProperties {
   pos_x: string;
   pos_y: string;
   position: string;
