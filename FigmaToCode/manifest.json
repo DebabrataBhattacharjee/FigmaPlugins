@@ -1,5 +1,5 @@
 {
-  "name": "first_plugin",
+  "name": "FigmaToCode",
   "id": "1073533192571093240",
   "api": "1.0.0",
   "main": "code.js",

@@ -1,7 +1,3 @@
-<!-- <h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,9 +14,12 @@
 
 </html>
 <script>
-  let components = [];
+
   onmessage = ({ data }) => {
-    components = data.pluginMessage.components
+    const { pluginMessage: { components } } = data;
+    let htmlCode = createDiv(components);
+    htmlCode = "<!DOCTYPE html>\n<html>\n<body>" + htmlCode + "</body>\n</html>";
+    document.getElementById('div-container').innerText = htmlCode;
     createDiv(components);
   };
 
@@ -29,30 +28,45 @@
 
 <script>
   function createDiv(components) {
-    let htmlCode = "<!DOCTYPE html><html><body>";
-    components.forEach(element => {
-      htmlCode = htmlCode + getHtmlCodeDiv(element);
-    });
-    htmlCode = htmlCode + "</body></html>";
-    document.getElementById('div-container').innerText = htmlCode;
+    if (components &&
+      components.length) {
+      let htmlCode = "";
+      components.forEach(element => {
+        htmlCode = htmlCode + getHtmlCodeDiv(element);
+      });
+      return htmlCode;
+    } return '';
   }
 </script>
 
 <script>
   function getHtmlCodeDiv(element) {
-    const divHtml = `
+    if (element) {
+      console.log("element", element);
+      const divHtml = `
     <div 
         style='
-        background-color:rgb(${element.color.r},${element.color.g},${element.color.b});
+        background-color: ${getBackgroundColor(element)};
         width:${element.width}; 
         height:${element.height};
         position:${element.position};
         top:${element.pos_y};
         left:${element.pos_x}
         '>
+              ${createDiv(element.children)}
     </div>
     `;
-    return divHtml;
+      return divHtml;
+    }
+    return null;
   }
 
+</script>
+
+<script>
+  function getBackgroundColor(element) {
+    if (element.color) {
+      return `rgb(${element.color.r},${element.color.g},${element.color.b})`;
+    } return 'none';
+  }
 </script>
