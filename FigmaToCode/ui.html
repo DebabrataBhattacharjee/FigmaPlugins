@@ -1,7 +1,3 @@
-<!-- <h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,16 +14,11 @@
 
 </html>
 <script>
-  let components = [];
+
   onmessage = ({ data }) => {
-    const pluginData = {
-      height : data.pluginMessage.height,
-      width : data.pluginMessage.width,
-      x : data.pluginMessage.x,
-      y : data.pluginMessage.y,
-    }
-    components.push(pluginData)
-    createDiv(components);
+    const { pluginMessage: { components } } = data;
+    const htmlCode = createDiv(components);
+    document.getElementById('div-container').innerText = htmlCode;
   };
 
 
@@ -35,18 +26,22 @@
 
 <script>
   function createDiv(components) {
-    let htmlCode = '';
-    components.forEach(element => {
-      htmlCode = htmlCode + getHtmlCodeDiv(element);
-    });
-
-    document.getElementById('div-container').innerText = htmlCode;
+    if (components &&
+      components.length) {
+      let htmlCode = '';
+      components.forEach(element => {
+        htmlCode = htmlCode + getHtmlCodeDiv(element);
+      });
+      console.log("######", htmlCode);
+      return htmlCode;
+    } return '';
   }
 </script>
 
 <script>
   function getHtmlCodeDiv(element) {
-    const divHtml = `
+    if (element) {
+      const divHtml = `
     <div 
         style='
         width:${element.width}; 
@@ -55,9 +50,12 @@
         top:${element.pos_y};
         left:${element.pos_x}
         '>
+              ${createDiv(element.children)}
     </div>
     `;
-    return divHtml;
+      return divHtml;
+    }
+    return null;
   }
 
 </script>
