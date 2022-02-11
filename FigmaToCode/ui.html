@@ -17,8 +17,10 @@
 
   onmessage = ({ data }) => {
     const { pluginMessage: { components } } = data;
-    const htmlCode = createDiv(components);
+    let htmlCode = createDiv(components);
+    htmlCode = "<!DOCTYPE html>\n<html>\n<body>" + htmlCode + "</body>\n</html>";
     document.getElementById('div-container').innerText = htmlCode;
+    createDiv(components);
   };
 
 
@@ -28,11 +30,10 @@
   function createDiv(components) {
     if (components &&
       components.length) {
-      let htmlCode = '';
+      let htmlCode = "";
       components.forEach(element => {
         htmlCode = htmlCode + getHtmlCodeDiv(element);
       });
-      console.log("######", htmlCode);
       return htmlCode;
     } return '';
   }
@@ -41,9 +42,11 @@
 <script>
   function getHtmlCodeDiv(element) {
     if (element) {
+      console.log("element", element);
       const divHtml = `
     <div 
         style='
+        background-color: ${getBackgroundColor(element)};
         width:${element.width}; 
         height:${element.height};
         position:${element.position};
@@ -58,4 +61,12 @@
     return null;
   }
 
+</script>
+
+<script>
+  function getBackgroundColor(element) {
+    if (element.color) {
+      return `rgb(${element.color.r},${element.color.g},${element.color.b})`;
+    } return 'none';
+  }
 </script>

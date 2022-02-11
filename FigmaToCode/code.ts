@@ -23,18 +23,25 @@ figma.on("run", () => {
   let divCssProperties: CssProperties = {
     pos_x: null,
     pos_y: null,
-    position: " absolute",
+    position: "absolute",
     width: null,
     height: null,
+    color: null,
   };
   const DomTree = figma.currentPage.children.map((childElement) => {
+    console.log("ChildElement", childElement);
     divCssProperties = {
-      pos_x: childElement.x,
-      pos_y: childElement.y,
+      pos_x: `${childElement.x}px`,
+      pos_y: `${childElement.y}px`,
       position: "absolute",
       width: `${childElement.width}px`,
       height: `${childElement.height}px`,
       children: getChildrenTree(childElement),
+      color: {
+        r: childElement.fills[0].color.r * 255,
+        g: childElement.fills[0].color.g * 255,
+        b: childElement.fills[0].color.b * 255,
+      },
     };
     return divCssProperties;
   });
@@ -46,11 +53,12 @@ figma.on("run", () => {
 });
 
 interface CssProperties {
-  pos_x: number;
-  pos_y: number;
+  pos_x: string;
+  pos_y: string;
   position: string;
   width: string;
   height: string;
   borderRadius?: string;
   children?: Array<CssProperties>;
+  color: object;
 }
