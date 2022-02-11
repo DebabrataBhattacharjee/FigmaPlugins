@@ -10,23 +10,20 @@ figma.on("run", () => {
         color: null,
     };
     const childrenArray = figma.currentPage.children.map((childElement) => {
-        // console.log(childElement.fills[0].color.r);
         divCssProperties = {
-            pos_x: childElement.x,
-            pos_y: childElement.y,
+            pos_x: `${childElement.x}px`,
+            pos_y: `${childElement.y}px`,
             position: "absolute",
             width: `${childElement.width}px`,
             height: `${childElement.height}px`,
             color: {
-                r: childElement.fills[0].color.r,
-                g: childElement.fills[0].color.g,
-                b: childElement.fills[0].color.b,
+                r: childElement.fills[0].color.r * 255,
+                g: childElement.fills[0].color.g * 255,
+                b: childElement.fills[0].color.b * 255,
             }
         };
         return divCssProperties;
     });
-    // console.log("childrenArray");
-    console.log(childrenArray);
     figma.ui.postMessage({
         type: "CREATE_ELEMENTS",
         components: childrenArray,

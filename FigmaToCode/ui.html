@@ -29,11 +29,11 @@
 
 <script>
   function createDiv(components) {
-    let htmlCode = '';
+    let htmlCode = "<!DOCTYPE html><html><body>";
     components.forEach(element => {
       htmlCode = htmlCode + getHtmlCodeDiv(element);
     });
-
+    htmlCode = htmlCode + "</body></html>";
     document.getElementById('div-container').innerText = htmlCode;
   }
 </script>
@@ -43,6 +43,7 @@
     const divHtml = `
     <div 
         style='
+        background-color:rgb(${element.color.r},${element.color.g},${element.color.b});
         width:${element.width}; 
         height:${element.height};
         position:${element.position};
