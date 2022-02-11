@@ -20,13 +20,7 @@
 <script>
   let components = [];
   onmessage = ({ data }) => {
-    const pluginData = {
-      height : data.pluginMessage.height,
-      width : data.pluginMessage.width,
-      x : data.pluginMessage.x,
-      y : data.pluginMessage.y,
-    }
-    components.push(pluginData)
+    components = data.pluginMessage.components
     createDiv(components);
   };
 
