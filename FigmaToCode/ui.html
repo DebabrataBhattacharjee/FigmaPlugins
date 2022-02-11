@@ -30,6 +30,7 @@
     createDiv(components);
   };
 
+
 </script>
 
 <script>
@@ -46,12 +47,15 @@
 <script>
   function getHtmlCodeDiv(element) {
     const divHtml = `
-    <div>
-      Height: ${element.height}
-      width: ${element.width}
-      x: ${element.x}
-      y: ${element.y}
-      </div>
+    <div 
+        style='
+        width:${element.width}; 
+        height:${element.height};
+        position:${element.position};
+        top:${element.pos_y};
+        left:${element.pos_x}
+        '>
+    </div>
     `;
     return divHtml;
   }
