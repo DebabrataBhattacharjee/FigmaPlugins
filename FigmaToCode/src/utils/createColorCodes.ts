@@ -1,6 +1,4 @@
-export const getColorCodes = (element) => {
-  // if (element.type === "COMPONENT") {
-  // }
+export const getColorCodes = (element) => {  
   if (element.fills.length >0) {
     return {
       r: element.fills[0].color.r * 255,

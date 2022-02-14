@@ -11,6 +11,10 @@ export const getChildrenTree = (parentNode: any) => {
             position: "absolute",
             width: `${childElement.width}px`,
             height: `${childElement.height}px`,
+            paddingBottom: `${childElement.paddingBottom}px`,
+            paddingLeft: `${childElement.paddingLeft}px`,
+            paddingRight: `${childElement.paddingRight}px`,
+            paddingTop: `${childElement.paddingTop}px`,
             children: getChildrenTree(childElement),
             color: {
               r: childElement.fills[0].color.r * 255,
