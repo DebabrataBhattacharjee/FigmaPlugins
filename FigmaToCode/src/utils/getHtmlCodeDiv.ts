@@ -1,4 +1,5 @@
 import { createDiv } from "./createDivElement";
+import { createStyleCode } from "./createStyleCode";
 import { getBackgroundColor } from "./getBackgroundColorDiv";
 
 export const getHtmlCodeDiv = (element) => {
@@ -8,15 +9,11 @@ export const getHtmlCodeDiv = (element) => {
     if (element.name == 'Buttons') {
       divHtml = `
       <Button
-        width = '${element.width}'
-        height  = '${element.height}'
-        pb = '${element.paddingBottom}'
-        pl = '${element.paddingLeft}'
-        pr = '${element.paddingRight}'
-        pt = '${element.paddingTop}'
-        >
+      `;  
+      divHtml += createStyleCode(element.childStyles)
+        divHtml += `>
         </Button>
-        `;  
+        `;
     } else if (element.name == 'Input') {
       divHtml = `
       <Input
