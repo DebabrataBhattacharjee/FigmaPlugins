@@ -1,45 +1,8 @@
 import { createDiv } from "./createDivElement";
-import { createStyleCode } from "./createStyleCode";
-import { getBackgroundColor } from "./getBackgroundColorDiv";
-
+import { createElementCodeWithStyle } from "./createElementCodeWithStyle";
 export const getHtmlCodeDiv = (element) => {
   if (element) {
-    let divHtml;
-    // console.log(element.name)
-    if (element.name == 'Buttons') {
-      divHtml = `
-      <Button
-      `;  
-      divHtml += createStyleCode(element.childStyles)
-        divHtml += `>
-        </Button>
-        `;
-    } else if (element.name == 'Input') {
-      divHtml = `
-      <Input
-        width = '${element.width}'
-        height  = '${element.height}'
-        pb = '${element.paddingBottom}'
-        pl = '${element.paddingLeft}'
-        pr = '${element.paddingRight}'
-        pt = '${element.paddingTop}'
-        >
-        </Input>
-        `;  
-    }  else {
-      divHtml = `
-        <div
-          width = '${element.width}'
-          height  = '${element.height}'
-          pb = '${element.paddingBottom}'
-          pl = '${element.paddingLeft}'
-          pr = '${element.paddingRight}'
-          pt = '${element.paddingTop}'
-          >
-          </div>
-          `;
-    }
-        // ${createDiv(element.children)}
+    let divHtml = createElementCodeWithStyle(element);
     return divHtml;
   }
   return null;

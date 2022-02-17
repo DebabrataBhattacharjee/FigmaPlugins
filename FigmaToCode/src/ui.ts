@@ -11,6 +11,7 @@ onmessage = ({ data }) => {
   // console.log("****", htmlCode);
   
   // htmlCode = "<!DOCTYPE html>\n<html>\n<body>" + htmlCode + "</body>\n</html>";
-  htmlCode = "<Box>" + htmlCode + "</Box>";
+  htmlCode = "<Center flex='1'>" + htmlCode + "</Center>";
+  // htmlCode = "<Box>" + htmlCode + "</Box>";
   document.getElementById("div-container").innerText = htmlCode;
 };

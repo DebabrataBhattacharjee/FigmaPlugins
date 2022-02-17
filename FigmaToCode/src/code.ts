@@ -1,50 +1,26 @@
-import { getChildrenTree } from "./utils/createDomTree";
-import { getColorCodes } from "./utils/createColorCodes";
+import { getFilteredChildProperties } from "./utils/getFilteredChildProperties";
+import { getFilteredProperties } from "./utils/getFilteredProperties";
 
 figma.showUI(__html__);
 figma.on("run", () => {
   let childProperties: CssProperties = {
-    name: null,
-    childStyles: {
-      // pos_x: null,
-      // pos_y: null,
-      // position: "absolute",
-      // width: null,
-      // height: null,
-      paddingBottom: null,
-      paddingLeft: null,
-      paddingRight: null,
-      paddingTop: null,
-      topLeftRadius: null,
-      topRightRadius: null,
-      bottomLeftRadius: null,
-      bottomRightRadius: null,
-      // color: null,
-    },
+    type: null,
+    content: null,
+    props: null,
+    children: null,
   };
-  const DomTree = figma.currentPage.children.map((childElement:any) => {
-    // console.log("ChildElementJson", JSON.stringify(childElement, null, 4));
-    console.log("ChildElement", childElement);
-    // console.log("name", childElement.name.split('/')[0]);
-    // console.log("und", childElement.paddingBottom);
-    // return false
+  let filteredProperties;
+  const DomTree = figma.currentPage.children.map((childElement: any) => {
+    // console.log("ChildElement", childElement);
+    const child_name = childElement.name.split("/")[0];
+    filteredProperties = getFilteredProperties(child_name, childElement);
     childProperties = {
-      name: childElement.name.split('/')[0], 
-      childStyles: {
-        // pos_x: `${childElement.x}px`,
-        // pos_y: `${childElement.y}px`,
-        paddingBottom: (childElement.paddingBottom) ? childElement.paddingBottom :'',
-        paddingLeft:  (childElement.paddingBottom) ? childElement.paddingLeft : '',
-        paddingRight:  (childElement.paddingBottom) ? childElement.paddingRight : '',
-        paddingTop:  (childElement.paddingBottom) ? childElement.paddingTop : '',
-        topLeftRadius:  (childElement.topLeftRadius) ? childElement.topLeftRadius : '',
-        topRightRadius:  (childElement.topRightRadius) ? childElement.topRightRadius : '',
-        bottomLeftRadius:  (childElement.bottomLeftRadius) ? childElement.bottomLeftRadius : '',
-        bottomRightRadius:  (childElement.bottomRightRadius) ? childElement.bottomRightRadius : '',
-        // color: getColorCodes(childElement),
-        // children: getChildrenTree(childElement),
-      }
+      type: filteredProperties.type ? filteredProperties.type : child_name,
+      props: filteredProperties.props,
+      content: filteredProperties.content,
+      children: getFilteredChildProperties(childElement),
     };
+    console.log("childProperties", childProperties);
     return childProperties;
   });
   console.log(figma.currentPage.children);
@@ -54,23 +30,14 @@ figma.on("run", () => {
   });
 });
 
+export interface Children {
+  type: string;
+  content: string;
+  props: object;
+}
 export interface CssProperties {
-  name: string;
-  childStyles: {
-    // pos_x: string;
-    // pos_y: string;
-    // position: string;
-    // width: string;
-    // height: string;
-    paddingBottom?: string;
-    paddingLeft?: string;
-    paddingRight?: string;
-    paddingTop?: string;
-    topLeftRadius?: string;
-    topRightRadius?: string;
-    bottomLeftRadius?: string;
-    bottomRightRadius?: string;
-    // children?: Array<CssProperties>;
-    // color: object;    
-  };
+  type: string;
+  content: string;
+  props: object;
+  children: Array<Children>;
 }
