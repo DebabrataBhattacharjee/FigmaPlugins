@@ -1,8 +1,9 @@
+import { createImageBytes } from "./createImageBytes";
 import { getColorCodes } from "./createColorCodes";
 import { styleKeys } from "./../theme/styleKeys";
-export const getFilteredProperties = (child_name, childElement) => {
+export const getFilteredProperties = async (child_name, childElement) => {
   let props, content, keys, type;
-  let styleProps = styleKeys(child_name);
+  let styleProps = styleKeys(child_name, childElement.type);
   keys = styleProps.keys;
   type = styleProps.type;
   props = keys.reduce(
@@ -21,13 +22,20 @@ export const getFilteredProperties = (child_name, childElement) => {
   } else {
     props.bg = getColorCodes(childElement.fills);
   }
-
+  if (type == "Image") {
+    props.source = await createImageBytes(childElement);
+  }
+  // props.name = childElement.name;
+  // props.position = "absolute";
   // props.width = childElement.width;
   // props.height = childElement.height;
-  props.top = childElement.y;
-  props.left = childElement.x;
+  // props.top = childElement.y;
+  // props.left = childElement.x;
+  // props.child = (childElement.children) ? childElement.children : [];
+  // console.log("from prop", childElement.name);
   return {
     type: type,
+    name: childElement.name,
     props: props,
     content: content,
   };

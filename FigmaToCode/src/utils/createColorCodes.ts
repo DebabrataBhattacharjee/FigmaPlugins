@@ -14,23 +14,23 @@ export const getColorCodes = (element) => {
         return x.length == 1 ? "0" + x : x; //Add zero if we get only one character
       });
       val = "#" + val.join("");
-      let mainColor, mainColorObj, colorVal;
-      Object.keys(colors).forEach((key) => {
-        mainColor = key;
-        mainColorObj = colors[key];
-        if (typeof mainColorObj == "string") {
-          if (mainColorObj == val) {
-            val = key;
-          }
-        } else if (typeof mainColorObj == "object") {
-          colorVal = Object.keys(mainColorObj).find(
-            (objKey) => mainColorObj[objKey] === val
-          );
-          if (colorVal) {
-            val = mainColor + "." + colorVal;
-          }
-        }
-      });
+      // let mainColor, mainColorObj, colorVal;
+      // Object.keys(colors).forEach((key) => {
+      //   mainColor = key;
+      //   mainColorObj = colors[key];
+      //   if (typeof mainColorObj == "string") {
+      //     if (mainColorObj == val) {
+      //       val = key;
+      //     }
+      //   } else if (typeof mainColorObj == "object") {
+      //     colorVal = Object.keys(mainColorObj).find(
+      //       (objKey) => mainColorObj[objKey] === val
+      //     );
+      //     if (colorVal) {
+      //       val = mainColor + "." + colorVal;
+      //     }
+      //   }
+      // });
       return val;
     }
     return "";

@@ -1,7 +1,8 @@
-export const styleKeys = (elementName) => {
+export const styleKeys = (elementName, childType) => {
   let keys = ["height", "width"];
   let type = "Box";
-  if (elementName == "Buttons") {
+  let imageValue;
+  if (elementName == "Buttons" || elementName == "Button") {
     keys = [
       "paddingBottom",
       "paddingLeft",
@@ -13,14 +14,26 @@ export const styleKeys = (elementName) => {
       "bottomRightRadius",
     ];
     type = "Button";
-  }
-  if (elementName == "Text label") {
+  } else if (elementName == "Text" || childType == "TEXT") {
     keys = [];
     type = "Text";
-  }
-  if (elementName == "Input") {
+  } else if (elementName == "Input") {
     keys = ["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
     type = "Input";
+  } else if (elementName == "image") {
+    keys = ["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
+    type = "Image";
+  } else if (childType == "FrameNode") {
+    keys = [
+      "paddingBottom",
+      "paddingLeft",
+      "paddingRight",
+      "paddingTop",
+      "topLeftRadius",
+      "topRightRadius",
+      "bottomLeftRadius",
+      "bottomRightRadius",
+    ];
   }
   return {
     keys: keys,

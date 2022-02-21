@@ -1,6 +1,7 @@
 import { createStyleCode } from "./createStyleCode";
+import { getRecursiveChildElements } from "./getRecursiveChildElements";
 export const createElementCodeWithStyle = (element) => {
-  let divHtml;
+  let divHtml, child;
   if (element) {
     // if (element.type == "Button" || element.type == "Input") {
     divHtml = `
@@ -10,14 +11,7 @@ export const createElementCodeWithStyle = (element) => {
     divHtml += `>`;
     divHtml += element.content ? element.content : "";
     if (element.children) {
-      //   console.log('ppp', element.children)
-      element.children.forEach((child) => {
-        divHtml += `<${child.type}`;
-        divHtml += createStyleCode(child.props);
-        divHtml += `>`;
-        divHtml += child.content ? child.content : "";
-        divHtml += `</${child.type}>`;
-      });
+      divHtml += getRecursiveChildElements(element.children);
     }
     divHtml += `</${element.type}>
         `;
